@@ -64,16 +64,19 @@ jobs:
                   --from-literal=DATABASE_URL="${{ secrets.DATABASE_URL }}" \
                   --namespace=tech-homolog \
                   --dry-run=client -o yaml | kubectl apply -f -                
+            
+            - name: verificar criações
+              run: kubectl get all
 
-            - name: Deploy to Kubernetes Cluster
-              uses: azure/k8s-deploy@v5
-              with:
-                namespace: tech-homolog
-                manifests: |
-                  02-encontros-tech/k8s/manifests.yaml
-                images: |
-                  ${{ vars.DOCKERHUB_USERNAME }}/encontros-tech:v${{ github.run_number }}
-                strategy: basic
+#            - name: Deploy to Kubernetes Cluster
+#              uses: azure/k8s-deploy@v5
+#              with:
+#                namespace: tech-homolog
+#                manifests: |
+#                  02-encontros-tech/k8s/manifests.yaml
+#                images: |
+#                  ${{ vars.DOCKERHUB_USERNAME }}/encontros-tech:v${{ github.run_number }}
+#                strategy: basic
 
     CD-producao:
         runs-on: ubuntu-latest
